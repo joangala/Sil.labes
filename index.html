@@ -72,27 +72,28 @@ button{font-family:inherit;font-weight:800;}
 .hint{font-size:20px;color:#C4BBB0;font-weight:700;text-align:center;transition:opacity 0.5s;}
 .card-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
 .card{
-  border-radius:32px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:-1px;box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  border-radius:36px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;letter-spacing:10px;padding-left:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.08);border:none;
   -webkit-tap-highlight-color:transparent;touch-action:none;transition:all 0.3s ease;cursor:grab;
 }
 .card.matched{
-  background:transparent!important;border:4px dashed #E8E4DD!important;
-  color:transparent!important;box-shadow:none!important;opacity:0.25;cursor:default;
+  background:transparent!important;box-shadow:none!important;opacity:0.15;cursor:default;
+  border:4px dashed #E8E4DD!important;color:transparent!important;
 }
 .shadow{
-  border-radius:32px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:-1px;color:#E0DBD3;
-  background:#F3F0EB;border:5px dashed #DDD8CF;
+  border-radius:36px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;letter-spacing:10px;padding-left:10px;color:#DDD8CF;
+  background:#EEEBE6;border:none;
   -webkit-tap-highlight-color:transparent;touch-action:none;transition:all 0.15s ease;
 }
 .shadow.matched{animation:popIn 0.4s ease;}
 .shadow.wrong-shake{animation:shake 0.4s ease;}
 .arrow{font-size:36px;color:#E0DBD3;line-height:1;animation:floatArrow 1.5s ease-in-out infinite;}
 .drag-clone{
-  position:fixed;border-radius:32px;background:#FFF;
+  position:fixed;border-radius:36px;background:#FFF;border:none;
   display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:-1px;
+  font-weight:900;letter-spacing:10px;padding-left:10px;
   z-index:5000;pointer-events:none;transform:scale(1.08) rotate(-2deg);
 }
 .star{position:absolute;width:18px;height:18px;font-size:18px;animation:starBurst 0.7s ease-out forwards;}
@@ -279,7 +280,7 @@ function nextRound(){if(audioCtx&&audioCtx.state==="suspended"){try{audioCtx.res
 
 /* ═══ RENDER ═══ */
 function getCardSize(){return syllables.length>=5?200:240;}
-function getFS(syl){var base=syllables.length>=5?68:86;return syl.length>2?Math.round(base*0.82):base;}
+function getFS(syl){var base=syllables.length>=5?120:150;return syl.length>2?Math.round(base*0.75):base;}
 
 function renderGame(){
   var cs=getCardSize();
@@ -295,7 +296,7 @@ function renderGame(){
       var syl=syllables[idx];var el=document.createElement("div");
       el.className="card"+(matched.has(idx)?" matched":"");
       el.style.width=el.style.height=cs+"px";el.style.fontSize=getFS(syl)+"px";
-      if(!matched.has(idx)){el.style.background="#FFF";el.style.border="5px solid "+colorMap[idx];el.style.color=colorMap[idx];}
+      if(!matched.has(idx)){el.style.background="#FFF";el.style.border="none";el.style.color=colorMap[idx];}
       el.textContent=syl;
       if(!matched.has(idx)){
         el.addEventListener("touchstart",function(e){onTouchStart(e,idx);},{passive:false});
@@ -314,7 +315,7 @@ function renderGame(){
       var el=document.createElement("div");
       el.className="shadow"+(matched.has(syllIdx)?" matched":"");
       el.style.width=el.style.height=cs+"px";el.style.fontSize=getFS(syl)+"px";
-      if(matched.has(syllIdx)){el.style.background=colorMap[syllIdx]+"15";el.style.border="5px solid "+colorMap[syllIdx];el.style.color=colorMap[syllIdx];}
+      if(matched.has(syllIdx)){el.style.background=colorMap[syllIdx]+"18";el.style.border="none";el.style.color=colorMap[syllIdx];}
       el.textContent=syl;
       bot.appendChild(el);
     })(si);
@@ -371,8 +372,8 @@ function showClone(idx,pos){
   var cl=document.getElementById("drag-clone");var cs=getCardSize();var syl=syllables[idx];
   cl.style.display="flex";cl.style.width=cl.style.height=cs+"px";
   cl.style.fontSize=getFS(syl)+"px";cl.style.color=colorMap[idx];
-  cl.style.border="5px solid "+colorMap[idx];
-  cl.style.boxShadow="0 16px 48px rgba(0,0,0,0.2), 0 0 0 4px "+colorMap[idx]+"33";
+  cl.style.border="none";
+  cl.style.boxShadow="0 16px 48px rgba(0,0,0,0.15), 0 0 0 4px "+colorMap[idx]+"30";
   cl.textContent=syl;moveClone(pos);
 }
 function moveClone(pos){
@@ -389,15 +390,15 @@ function updateShadowHover(shIdx){
   var shadows=document.getElementById("bottom-row").children;
   for(var i=0;i<shadows.length;i++){
     var si=shadowOrder[i];if(matched.has(si))continue;
-    shadows[i].style.background="#F3F0EB";shadows[i].style.border="5px dashed #DDD8CF";
+    shadows[i].style.background="#EEEBE6";shadows[i].style.border="none";
     shadows[i].style.transform="scale(1)";shadows[i].className="shadow";
   }
   hoverShadowIdx=shIdx;
   if(shIdx===null||dragIdx===null)return;
   var si=shadowOrder[shIdx];if(matched.has(si))return;
   var el=shadows[shIdx],correct=syllables[dragIdx]===syllables[si];
-  if(correct){el.style.background=colorMap[dragIdx]+"25";el.style.border="5px solid "+colorMap[dragIdx];el.style.transform="scale(1.06)";}
-  else{el.style.background="#FFEAE8";el.style.border="5px dashed #FF9999";}
+  if(correct){el.style.background=colorMap[dragIdx]+"30";el.style.border="none";el.style.transform="scale(1.06)";}
+  else{el.style.background="#FEE2E0";el.style.border="none";}
 }
 
 function handleDrop(cardIdx,shIdx){
