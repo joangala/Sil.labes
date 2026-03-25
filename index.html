@@ -70,10 +70,10 @@ button{font-family:inherit;font-weight:800;}
   align-items:center;padding:12px 24px;
 }
 .hint{font-size:20px;color:#C4BBB0;font-weight:700;text-align:center;transition:opacity 0.5s;}
-.card-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.card-row{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;}
 .card{
   border-radius:36px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:10px;padding-left:10px;
+  font-weight:900;letter-spacing:14px;padding-left:14px;
   box-shadow:0 6px 24px rgba(0,0,0,0.08);border:none;
   -webkit-tap-highlight-color:transparent;touch-action:none;transition:all 0.3s ease;cursor:grab;
 }
@@ -83,7 +83,7 @@ button{font-family:inherit;font-weight:800;}
 }
 .shadow{
   border-radius:36px;display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:10px;padding-left:10px;color:#DDD8CF;
+  font-weight:900;letter-spacing:14px;padding-left:14px;color:#DDD8CF;
   background:#EEEBE6;border:none;
   -webkit-tap-highlight-color:transparent;touch-action:none;transition:all 0.15s ease;
 }
@@ -93,7 +93,7 @@ button{font-family:inherit;font-weight:800;}
 .drag-clone{
   position:fixed;border-radius:36px;background:#FFF;border:none;
   display:flex;align-items:center;justify-content:center;
-  font-weight:900;letter-spacing:10px;padding-left:10px;
+  font-weight:900;letter-spacing:14px;padding-left:14px;
   z-index:5000;pointer-events:none;transform:scale(1.08) rotate(-2deg);
 }
 .star{position:absolute;width:18px;height:18px;font-size:18px;animation:starBurst 0.7s ease-out forwards;}
@@ -279,8 +279,8 @@ function initRound(){
 function nextRound(){if(audioCtx&&audioCtx.state==="suspended"){try{audioCtx.resume();}catch(e){}}initRound();}
 
 /* ═══ RENDER ═══ */
-function getCardSize(){return syllables.length>=5?200:240;}
-function getFS(syl){var base=syllables.length>=5?120:150;return syl.length>2?Math.round(base*0.75):base;}
+function getCardSize(){return syllables.length>=5?230:280;}
+function getFS(syl){var base=syllables.length>=5?140:170;return syl.length>2?Math.round(base*0.72):base;}
 
 function renderGame(){
   var cs=getCardSize();
